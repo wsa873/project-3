@@ -9,7 +9,10 @@ const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 // Express security library, sets default options for us to obfuscate sensitive information
 const helmet = require('helmet');
-const session = require('express-session')
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const redis = require('redis');
+const csrf = require('csurf');
 
 const router = require('./router.js');
 
@@ -23,6 +26,15 @@ mongoose.connect(dbURI, (err) => {
   }
 });
 
+const redisURL = process.env.REDISCLOUD_URL
+ || 'redis://default:XCfT3y1Qu9UTqEYhQpjRaFt0nEqqpKup@redis-12110.c275.us-east-1-4.ec2.cloud.redislabs.com:12110';
+
+const redisClient = redis.createClient({
+  legacyMode: true,
+  url: redisURL,
+});
+redisClient.connect().catch(console.error);
+
 const app = express();
 app.use(helmet());
 app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
@@ -32,14 +44,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session({
   key: 'sessionid',
+  store: new RedisStore({
+    client: redisClient,
+  }),
   secret: 'Domo Arigato',
   resave: true,
   saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+  },
 }));
 app.engine('handlebars', expressHandlebars.engine({ defaultLayout: '' }));
 app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/../views`);
 app.use(cookieParser());
+
+app.use(csrf());
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+  console.log('Missing CSRF token!');
+  return false;
+});
 
 router(app);
 
