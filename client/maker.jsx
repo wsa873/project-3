@@ -13,7 +13,7 @@ const handleDomo = (e) => {
         return false;
     }
 
-    sendPost (e.target.action, {name, age, _csrf}, loadDomosFromServer);
+    helper.sendPost(e.target.action, {name, age, _csrf}, loadDomosFromServer);
 
     return false;
 }
@@ -38,7 +38,7 @@ const DomoForm = (props) => {
 }
 
 const DomoList = (props) => {
-    if(props.domo.length === 0){
+    if(props.domos.length === 0){
         return(
             <div className = "domoList">
                 <h3 className="emptyDomo">No Domos Yet!</h3>
@@ -77,7 +77,7 @@ const init = async () => {
     const data = await response.json();
 
     ReactDOM.render(
-        <DomoForm domos = {data.csrfToken} />,
+        <DomoForm csrf = {data.csrfToken} />,
         document.getElementById('makeDomo')
     );
 
