@@ -37,8 +37,10 @@ const DomoForm = (props) => {
             <label htmlFor = "color">Body Color: </label>
             <input id = "domoColor" type = "text" name = "color" placeholder = "Domo Color"/>
         </form>
+
+
     );
-}
+};
 
 const DomoList = (props) => {
     if(props.domos.length === 0){
@@ -51,21 +53,25 @@ const DomoList = (props) => {
 
     const domoNodes = props.domos.map(domo => {
         return (
+            
             <div key = {domo._id} className = "domo">
                 <img src = "/assets/img/domoface.jpeg" alt = "domo face" className = "domoFace" />
                 <h3 className = "domoName">Name: {domo.name} </h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
                 <h3 className = "domoColor">Color: {domo.color}</h3>
             </div>
+            
         );
     });
 
     return (
         <div className="domoList">
+            <h2 id = "domoCount">{props.domos.length} domos have been created so far.</h2>
             {domoNodes}
         </div>
     );
 }
+
 
 const loadDomosFromServer = async () => {
     const response = await fetch('/getDomos');
@@ -82,14 +88,13 @@ const init = async () => {
 
     ReactDOM.render(
         <DomoForm csrf = {data.csrfToken} />,
-        document.getElementById('makeDomo')
+        document.getElementById('makeDomo'),
     );
 
     ReactDOM.render(
         <DomoList domos = {[]} />,
         document.getElementById('domos')
     );
-
     loadDomosFromServer();
 }
 

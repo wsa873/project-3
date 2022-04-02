@@ -67,8 +67,13 @@ nav:nth-child(1) {
     color: white;
 }
 
-.domoForm #domoColor{
-    
+.domoForm #domoColor, .domoForm label[for=color]{
+    float: right;
+}
+
+.domoCount {
+    text-align: center;
+    margin-left: auto;
 }
 
 .domoForm input[type=text] {
