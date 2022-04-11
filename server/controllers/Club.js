@@ -15,7 +15,7 @@ const makeClub = async (req, res) => {
   const ClubData = {
     name: req.body.name,
     latitude: req.body.latitude,
-    longitude: req.body.longitude,
+    location: [req.body.longitude, req.body.latitude],
     stadium: req.body.stadium,
     owner: req.session.account._id,
   };

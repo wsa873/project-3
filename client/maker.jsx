@@ -10,7 +10,7 @@ const handleClub = (e) => {
     const stadium = e.target.querySelector('#ClubStadium').value;
     const _csrf = e.target.querySelector('#_csrf').value;
 
-    if(!name || !age || !color){
+    if(!name || !latitude || !longitude || !stadium){
         helper.handleError('All fields are required!');
         return false;
     }

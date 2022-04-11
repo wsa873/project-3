@@ -17,7 +17,7 @@ html, body {
 nav {
     width: 100%;
     height: 50px;
-    background-color: #55acee;
+    background-color: #3b753b;
 }
 
 nav:nth-child(1) {
@@ -38,27 +38,27 @@ nav:nth-child(1) {
     text-decoration: none;
     padding: 5px;
     border-radius: 4px;
-    background-color: #55acee;
+    background-color: #3b753b;
     transition: background-color 0.4s ease;
 }
 
 .navlink a:hover {
     transition: background-color 0.8s ease;
-    background-color: #66bdff;
+    background-color:  #004723;
 }
 
-.domoForm {
-    border: 2px solid #338acc;
+.ClubForm {
+    border: 2px solid #004723;
     height: 35px;
     width: 900px;
     margin-top:0px;
     padding-top:10px;
-    background-color: #55acee;
+    background-color: #3b753b;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
 }
 
-.domoForm label {
+.ClubForm label {
     display: inline-block;
     width: 75px;
     margin-left: 10px;
@@ -67,36 +67,36 @@ nav:nth-child(1) {
     color: white;
 }
 
-.domoForm #domoColor, .domoForm label[for=color]{
+.ClubForm #ClubColor, .ClubForm label[for=color]{
     float: right;
 }
 
-.domoCount {
+.ClubCount {
     text-align: center;
     margin-left: auto;
 }
 
-.domoForm input[type=text] {
+.ClubForm input[type=text] {
     float:left;
 }
 
-.makeDomoSubmit {
+.makeClubSubmit {
     transition: background-color 0.4s ease;
     display: inline;
     width: 90px;
-    background-color: #55acee;
+    background-color: #3b753b;
     border-radius: 2px;
     color: white;
     text-decoration: none;
 }
 
-.makeDomoSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
+.makeClubSubmit:link, .makeClubSubmit:visited, .makeClubSubmit:hover, .makeClubSubmit:active {
     color: white;
 }
 
-.makeDomoSubmit:hover {
+.makeClubSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc;
+    background-color: #004723;
 }
 
 .mainForm {
@@ -127,7 +127,7 @@ nav:nth-child(1) {
     margin-top: 14px;
     font-size: 1.2em;
     width: 100px;
-    background-color: #55acee;
+    background-color: #004723;
     border-radius: 2px;
     border-color: #66acee;
     padding: 3px 0px;
@@ -141,7 +141,7 @@ nav:nth-child(1) {
 
 .formSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc;
+    background-color: #004723;
 }
 
 #user, #pass, #pass2 {
@@ -153,14 +153,14 @@ nav:nth-child(1) {
 
 #user:focus, #pass:focus, #pass2:focus {
     outline: none;
-    box-shadow: 0px 0px 1px 1px #55acee;
+    box-shadow: 0px 0px 1px 1px #004723;
 }
 
 .hidden {
     display: none;
 }
 
-#domoMessage {
+#ClubMessage {
     top: 250px;
     width: 250px;
     height: 650px;
@@ -170,7 +170,7 @@ nav:nth-child(1) {
     overflow: hidden;
 }
 
-#domoMessage h3 {
+#ClubMessage h3 {
     width: 200px;
     position: absolute;
     top: 0px;
@@ -190,7 +190,7 @@ nav:nth-child(1) {
     font-style: italic;
 }
 
-#domo {
+#Club {
     z-index: 225;
     margin-top: -20px;
     margin-left: 135px;
@@ -201,36 +201,36 @@ nav:nth-child(1) {
     transform: rotate(330deg);
 }
 
-#domos {
+#Clubs {
     width: 40%;
     min-width: 400px;
-    border: 2px solid #55acee;
+    border: 2px solid #004723;
     border-radius: 4px;
     margin: 0 auto;
     margin-top: 100px;
 }
 
-.domo {
+.Club {
     width: 95%;
     margin: 0 auto;
     margin-top: 2px;
     margin-bottom: 2px;
-    border: 2px solid #55acee;
+    border: 2px solid #004723;
     border-radius: 4px;
-    background-color: #55acee;
+    background-color: #004723;
     padding: 10px;
     min-height:60px;
     overflow: hidden;
 }
 
-.domo:hover {
+.Club:hover {
     transition: border-color 0.2s ease-out;
     border-color: rgba(255,255,255, 0.8);
     transition: background-color 2.6s ease-out;
     background-color: #66bfff;
 }
 
-img.domoFace {
+img.ClubFace {
     margin-left: 25px;
     margin-right: 10px;
     height: 50px;
@@ -240,7 +240,7 @@ img.domoFace {
     float:left;
 }
 
-h3.emptyDomo {
+h3.emptyClub {
     width: 400px;
     font-size: 1.5em;
     margin: 0 auto;
@@ -248,7 +248,7 @@ h3.emptyDomo {
     margin-top: 18px;
 }
 
-h3.domoName {
+h3.ClubName {
     float:left;
     width: 200px;
     font-weight: bold;
@@ -256,19 +256,10 @@ h3.domoName {
     font-size: 1.5em;
 }
 
-h3.domoAge, h3.domoColor {
-    float:right;
-    text-align: left;
-    width: 100px;
-    font-weight: bold;
-    padding-right: 40px;
-    font-size: 1.5em;
-}
-
-.domo:first-child {
+.Club:first-child {
     margin-top: 10px;
 }
 
-.domo:last-child {
+.Club:last-child {
     margin-bottom:10px;
 }
