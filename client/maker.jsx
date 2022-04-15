@@ -93,18 +93,21 @@ const loadClubsFromServer = async () => {
     );
 }
 
+//responsible for storing all the points
 const geojson = {
     type: 'FeatureCollection',
     features: [],
 };
 
-//all the functions between here and init are placeholders from a previous project I maded a few semesters ago.
-//these will be here to make sure the map and club markers work as intended and will be refactored, moved elsewhere,
+//all the functions between here and init are placeholders from a 
+//previous project I maded a few semesters ago.
+//these will be here to make sure the map and club markers work 
+//as intended and will be refactored, moved elsewhere,
 //or removed once that is done
 const initMap = () => {
 
-    //will most likely be moved to config var in final version
-    mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwbWZicnVoIn0.wxTIYZj7IkkXy-BwDUmuBw';
+//will most likely be moved to config var in final version
+mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwbWZicnVoIn0.wxTIYZj7IkkXy-BwDUmuBw';
 
     const map = new mapboxgl.Map({
         container: 'map',
@@ -170,7 +173,7 @@ const loadMarkers = () =>{
         },
     ]
 
-    // now convert this data to GeoJSON
+    //converting this data to GeoJSON
 	for (let team of teamLocations)
 	{
 		//an "empty" GEOJSON feature

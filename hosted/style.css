@@ -263,3 +263,10 @@ h3.ClubName {
 .Club:last-child {
     margin-bottom:10px;
 }
+
+#map {
+    left: 50rem;
+    bottom: 25rem;
+	height: 50%;
+    width: 50%;
+}

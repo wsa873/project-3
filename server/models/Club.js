@@ -13,7 +13,7 @@ const ClubSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
-  //https://mongoosejs.com/docs/geojson.html
+  // https://mongoosejs.com/docs/geojson.html
   location: {
     type: {
       type: String,
@@ -23,7 +23,7 @@ const ClubSchema = new mongoose.Schema({
     coordinates: {
       type: [Number],
       required: true,
-    }
+    },
   },
   stadium: {
     type: String,
