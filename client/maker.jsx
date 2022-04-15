@@ -1,4 +1,6 @@
 const helper = require('./helper.js');
+//https://docs.mapbox.com/mapbox-gl-js/guides/install/
+import mapboxgl from 'mapbox-gl';
 
 const handleClub = (e) => {
     e.preventDefault();
@@ -46,12 +48,13 @@ const ClubForm = (props) => {
 };
 
 
-
+/*
 const ClubList = (props) => {
 
 }
+*/
 //will be replaced in the future once I'm certain information is being displayed properly
-/*
+
 const ClubList = (props) => {
     if(props.Clubs.length === 0){
         return(
@@ -79,7 +82,7 @@ const ClubList = (props) => {
         </div>
     );
 }
-*/
+
 
 const loadClubsFromServer = async () => {
     const response = await fetch('/getClubs');
@@ -90,15 +93,15 @@ const loadClubsFromServer = async () => {
     );
 }
 
+const geojson = {
+    type: 'FeatureCollection',
+    features: [],
+};
+
 //all the functions between here and init are placeholders from a previous project I maded a few semesters ago.
 //these will be here to make sure the map and club markers work as intended and will be refactored, moved elsewhere,
 //or removed once that is done
 const initMap = () => {
-
-    const geojson = {
-        type: 'FeatureCollection',
-        features: [],
-    };
 
     //will most likely be moved to config var in final version
     mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwbWZicnVoIn0.wxTIYZj7IkkXy-BwDUmuBw';

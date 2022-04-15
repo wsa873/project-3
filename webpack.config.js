@@ -12,6 +12,11 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
+                    //mapbox has compatibility issues with babel. this
+                    //makes it so babel skips over mapbox entirely when transpiling
+                    options :{
+                        ignore: [ './node_modules/mapbox-gl/dist/mapbox-gl.js' ]
+                    }
                 },
             },
         ],
