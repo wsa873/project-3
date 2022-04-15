@@ -3,7 +3,7 @@
    end in an error.
 */
 const handleError = (message) => {
-    document.getElementById('errorMessage').textContent = message;
+    //document.getElementById('errorMessage').textContent = message;
     //document.getElementById('domoMessage').classList.remove('hidden');
   };
   
@@ -24,6 +24,7 @@ const handleError = (message) => {
 
     if(result.error) {
         handleError(result.error);
+        console.log(result.error);
     }
   
     if(result.redirect) {
@@ -32,6 +33,7 @@ const handleError = (message) => {
 
     if(handler){
         handler(result);
+        
     }
   };
 
