@@ -14,16 +14,19 @@ const makeClub = async (req, res) => {
 
   const ClubData = {
     name: req.body.name,
-    latitude: req.body.latitude,
-    location: [req.body.longitude, req.body.latitude],
+    location: {
+        type: 'Point',
+        coordinates: [req.body.longitude, req.body.latitude],
+    },
     stadium: req.body.stadium,
     owner: req.session.account._id,
   };
 
   try {
     const newClub = new Club(ClubData);
+    console.log(newClub);
     await newClub.save();
-    return res.status(201).json({name: newClub.name, location: [newClub.longitude, newClub.latitude], stadium: newClub.stadium});
+    return res.status(201).json({name: newClub.name, latitude: newClub.location, stadium: newClub.stadium});
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
