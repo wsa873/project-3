@@ -99,6 +99,8 @@ const geojson = {
     features: [],
 };
 
+let map;
+
 //all the functions between here and init are placeholders from a 
 //previous project I maded a few semesters ago.
 //these will be here to make sure the map and club markers work 
@@ -109,7 +111,7 @@ const initMap = () => {
 //will most likely be moved to config var in final version
 mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwbWZicnVoIn0.wxTIYZj7IkkXy-BwDUmuBw';
 
-    const map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v10',
         center: [-.1911,51.4816], //Chelsea FC's physical location
@@ -173,6 +175,8 @@ const loadMarkers = () =>{
         },
     ]
 
+    //make fetch request for clubs
+
     //converting this data to GeoJSON
 	for (let team of teamLocations)
 	{
@@ -205,18 +209,19 @@ const loadMarkers = () =>{
 }
 
 const addMarker =(coordinates, title, description, className) =>{
-	// create a HTML element for each feature
-	const el = document.createElement('div');
-	el.className = className;
+	//// create a HTML element for each feature
+	//const el = document.createElement('div');
+	//el.className = className;
 
-	new mapboxgl.Marker(el)
+	new mapboxgl.Marker()
 		.setLngLat(coordinates)
 		.setPopup(new mapboxgl.Popup({ offset: 25}) //add popups
-		.setHTML('<h3>' + title + '</h3><p>' + description + '</p>'))
+		    .setHTML(`<h3>${title}</h3><p>${description}</p>`))
 		.addTo(map);
 }
 
 const addMarkersToMap = () =>{
+    console.log(geojson);
 	for (let feature of geojson.features)
 	{
 		addMarker(feature.geometry.coordinates, feature.properties.title, feature.properties.description, 'marker');
@@ -263,6 +268,7 @@ const init = async () => {
     loadClubsFromServer();
     initMap();
     loadMarkers();
+    addMarkersToMap();
 }
 
 window.onload = init;
