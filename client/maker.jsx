@@ -17,7 +17,11 @@ const handleClub = (e) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, {name, latitude, longitude, stadium, _csrf}, loadClubsFromServer);
+    helper.sendPost(e.target.action, {name, latitude, longitude, stadium, _csrf}, async() => {
+        await loadMarkers();
+        //might need to clear markers
+        addMarkersToMap();
+    });//loadClubsFromServer);
 
     return false;
 }
@@ -47,50 +51,11 @@ const ClubForm = (props) => {
     );
 };
 
-
-/*
-const ClubList = (props) => {
-
-}
-*/
-//will be replaced in the future once I'm certain information is being displayed properly
-
-const ClubList = (props) => {
-    if(props.Clubs.length === 0){
-        return(
-            <div className = "ClubList">
-                <h3 className="emptyClub">No Clubs Yet!</h3>
-            </div>
-        );
-    }
-
-    const ClubNodes = props.Clubs.map(Club => {
-        return (
-            <div key = {Club._id} className = "Club">
-                <h3 className = "ClubName">Name: {Club.name} </h3>
-                <h3 className = "ClubLatitude">Latitude: {Club.location.coordinates[1]}</h3>
-                <h3 className = "ClubLongitude">Longitude: {Club.location.coordinates[0]}</h3>
-                <h3 className = "ClubStadium">Stadium: {Club.stadium}</h3>
-            </div>
-            
-        );
-    });
-
-    return (
-        <div>
-            {ClubNodes}
-        </div>
-    );
-}
-
-
 const loadClubsFromServer = async () => {
     const response = await fetch('/getClubs');
     const data = await response.json();
-    ReactDOM.render(
-    <ClubList Clubs = {data.Clubs} />,
-        document.getElementById('Clubs')
-    );
+
+    return data.Clubs;
 }
 
 //responsible for storing all the points
@@ -99,6 +64,8 @@ const geojson = {
     features: [],
 };
 
+//needs to be in this scope to work. austin says that since we're not importing this anywhere
+//it's fine to leave it like this.
 let map;
 
 //all the functions between here and init are placeholders from a 
@@ -118,6 +85,7 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwb
 		zoom: 15.5,
     });
 
+    //loading the styling information for the map
     map.on('load', function(){
         const layers = map.getStyle().layers;
 
@@ -165,17 +133,35 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwb
     })
 }
 
-const loadMarkers = () =>{
+const loadMarkers = async() =>{
+
+    //make fetch request for clubs
+    const clubsData = await loadClubsFromServer();
+
+    console.log(clubsData);
+
     const teamLocations = [
         {
             latitude:-.1911,
 			longitude:51.4816,
 			title: "Chelsea",
-			description: "English Premier League"
+			description: "Stamford Bridge"
         },
     ]
 
-    //make fetch request for clubs
+    for(let i = 0; i < clubsData.length; i++){
+        teamLocations.push({
+            latitude: clubsData[i].location.coordinates[1],
+            longitude: clubsData[i].location.coordinates[0],
+            title: clubsData[i].name,
+            description: clubsData[i].stadium,
+        });
+
+        console.log(clubsData[i].location.coordinates[1]);
+        console.log(clubsData[i].location.coordinates[0]);
+        console.log(clubsData[i].name);
+        console.log(clubsData[i].stadium);
+    }
 
     //converting this data to GeoJSON
 	for (let team of teamLocations)
@@ -205,7 +191,7 @@ const loadMarkers = () =>{
 		//push it onto the 'geojson' array
 		geojson.features.push(newFeature);
 	}
-	//console.log(geojson.features);
+	console.log(geojson.features);
 }
 
 const addMarker =(coordinates, title, description, className) =>{
@@ -228,30 +214,6 @@ const addMarkersToMap = () =>{
 	}
 }
 
-/* Functions from previous project that control map movement
-Currently only here as reference, will be refactored in future update
-
-//Functions controling the center, zoom level, and perspective of the map. Values passed in are default 
-//if nothing is passed in from function calls
-const flyTo = (center = [0,0]) =>{
-	//https://docs.mapbox.com/mapbox-gl-js/api/#map#flyto
-	map.flyTo({center: center});
-}
-
-function setZoomLevel(value = 0)
-{
-	//https://docs.mapbox.com/help/glossary/zoom-level/
-	map.setZoom(value);
-}
-
-function setPitchAndBearing(pitch = 0, bearing = 0)
-{
-	//https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
-	//https://docs.mapbox.com/mapbox-gl-js/example/set-perspective/
-	map.setPitch(pitch);
-	map.setBearing(bearing);
-}
-*/
 const init = async () => {
     const response = await fetch ('/getToken');
     const data = await response.json();
@@ -261,13 +223,15 @@ const init = async () => {
         document.getElementById('makeClub'),
     );
 
+    /*
     ReactDOM.render(
         <ClubList Clubs = {[]} />,
         document.getElementById('Clubs')
     );
-    loadClubsFromServer();
+    */
+    //loadClubsFromServer();
     initMap();
-    loadMarkers();
+    await loadMarkers();
     addMarkersToMap();
 }
 
