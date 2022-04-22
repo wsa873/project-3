@@ -60,7 +60,7 @@ nav:nth-child(1) {
 
 .ClubForm label {
     display: inline-block;
-    width: 75px;
+    width: 100px;
     margin-left: 10px;
     font-size: 1.2em;
     float: left;
@@ -265,10 +265,10 @@ h3.ClubName {
 }
 
 #map {
-    left: 5rem;
+    left: 25rem;
     bottom: 5rem;
-	height: 50%;
-    width: 50%;
+	height: 1000px;
+    width: 1000px;
 }
 
 .mapboxgl-marker {

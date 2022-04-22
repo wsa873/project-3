@@ -20,10 +20,52 @@ const handleClub = (e) => {
     helper.sendPost(e.target.action, {name, latitude, longitude, stadium, _csrf}, async() => {
         await loadMarkers();
         //might need to clear markers
+
+
         addMarkersToMap();
-    });//loadClubsFromServer);
+    });
 
     return false;
+}
+
+const handleChangePassword = (e) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const oldPass = e.target.querySelector('#pass').value;
+    const newPass = e.target.querySelector('#pass2').value;
+    const confirmPass = e.target.querySelector('#pass3').value;
+    const _csrf = e.target.querySelector('#_csrf').value;
+
+    if(!oldPass || !newPass || !confirmPass){
+        helper.handleError('All fields are required!');
+        return false;
+    }
+
+    helper.sendPost(e.target.action, {oldPass, newPass, confirmPass, _csrf});
+
+    return false;
+}
+
+const ChangePasswordWindow = (props) => {
+    return (
+        <form id = "changePasswordForm"
+            name = "changePasswordForm"
+            onSubmit = {handleChangePassword}
+            action = "/changePassword"
+            method = "POST"
+            className= "mainForm"
+        >
+            <label htmlFor = "pass">Old Password: </label>
+            <input id = "pass" type = "password" name = "pass" placeholder= "old password"/>
+            <label htmlFor = "pass2">New Password: </label>
+            <input id = "pass2" type = "password" name = "pass2" placeholder= "new password"/>
+            <label htmlFor = "pass3">Confirm New Password</label>
+            <input id = "pass3" type = "password" name = "pass3" placeholder = "retype new password"/>
+            <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
+            <input className="formSubmit" type = "submit" value = "Change Password" />
+        </form>
+    );
 }
 
 const ClubForm = (props) => {
@@ -195,15 +237,13 @@ const loadMarkers = async() =>{
 }
 
 const addMarker =(coordinates, title, description, className) =>{
-	//// create a HTML element for each feature
-	//const el = document.createElement('div');
-	//el.className = className;
 
 	new mapboxgl.Marker()
 		.setLngLat(coordinates)
 		.setPopup(new mapboxgl.Popup({ offset: 25}) //add popups
 		    .setHTML(`<h3>${title}</h3><p>${description}</p>`))
 		.addTo(map);
+
 }
 
 const addMarkersToMap = () =>{
@@ -218,18 +258,20 @@ const init = async () => {
     const response = await fetch ('/getToken');
     const data = await response.json();
 
+    const changePasswordButton = document.getElementById('changePasswordButton');
+
+    changePasswordButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        ReactDOM.render(<ChangePasswordWindow csrf={data.csrfToken} />,
+            document.getElementById('content'));
+        return false;
+    });
+
     ReactDOM.render(
         <ClubForm csrf = {data.csrfToken} />,
         document.getElementById('makeClub'),
     );
 
-    /*
-    ReactDOM.render(
-        <ClubList Clubs = {[]} />,
-        document.getElementById('Clubs')
-    );
-    */
-    //loadClubsFromServer();
     initMap();
     await loadMarkers();
     addMarkersToMap();
