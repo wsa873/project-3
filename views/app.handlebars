@@ -10,17 +10,19 @@
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body>
-  <nav><a href="/login"><img id="logo"/></a>
+  <nav><a href="/login"><img id="logo" src = "assets/img/mapbox-icon.png"/></a>
     <div class="navlink"><a href="/logout">Log out</a></div>
     <div class = "navlink"><a id="changePasswordButton" href = "/changePassword">Change Password</a></div>
+    <div class = "navlink"><a id="premiumTestButton" href = "/premium">Premium Test</a></div>
+    <div id="functionMessage" class='hidden'>
+        <h3><span id="errorMessage"></span></h3>
+    </div>
   </nav>
 
   <section id="makeClub">
 
   </section>
-  <section id="Clubs">
-    
-  </section>
+
   <!--where the mapbox map will appear. needs to appear exactly like this-->
   <div id = "map"></div>
   <section id = "content">

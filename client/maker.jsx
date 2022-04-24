@@ -60,7 +60,7 @@ const ChangePasswordWindow = (props) => {
             <input id = "pass" type = "password" name = "pass" placeholder= "old password"/>
             <label htmlFor = "pass2">New Password: </label>
             <input id = "pass2" type = "password" name = "pass2" placeholder= "new password"/>
-            <label htmlFor = "pass3">Confirm New Password</label>
+            <label htmlFor = "pass3">Confirm New Password: </label>
             <input id = "pass3" type = "password" name = "pass3" placeholder = "retype new password"/>
             <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
             <input className="formSubmit" type = "submit" value = "Change Password" />
@@ -80,16 +80,43 @@ const ClubForm = (props) => {
             <label htmlFor = "name">Name: </label>
             <input id = "ClubName" type = "text" name = "name" placeholder= "AFC United"/>
             <label htmlFor = "latitude">Latitude: </label>
-            <input id = "ClubLatitude" type = "number" name= "latitude"/>
+            <input id = "ClubLatitude" type = "number" name= "latitude" placeholder = "0"/>
             <label htmlFor = "longitude">Longitude: </label>
-            <input id = "ClubLongitude" type = "number" name= "longitude"/>
+            <input id = "ClubLongitude" type = "number" name= "longitude" placeholder = "0"/>
             <label htmlFor = "stadium">Stadium Name: </label>
             <input id = "ClubStadium" type = "text" name = "name" placeholder= "John Polishini Center"/>
             <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
             <input className="makeClubSubmit" type = "submit" value = "Make Club" />
+
+            <h3>Instructions</h3>
+            <p>Enter in parameters in the fields above, then hit submit. 
+                You can use the scroll wheel on the mouse to zoom in and out, and right click to change rotation.
+                Try clicking on the markers!
+            </p>
         </form>
+    );
+};
 
-
+const PremiumWindow = (props) => {
+    return (
+        <form id = "premiumWindow"
+            name = "premiumWindow"
+            //onSubmit = {handlePremium}
+            action = "/maker"
+            method = "POST"
+            className= "premiumWindow"
+        >
+            <img id="logo" src = "assets/img/Chelsea_FC.svg.png"/>
+            <h1>Chelsea FC</h1>
+            <h4>Chelsea Football Club is an English professional football club based in Fulham, West London. 
+                Founded in 1905, the club competes in the Premier League, the top division of English football. 
+                Domestically, the club has won six league titles, eight FA Cups, five League Cups, and four FA Community Shields. 
+                Internationally, they have won two European Cups, two UEFA Cup Winners' Cups, two UEFA Cups, two UEFA Super Cups, 
+                and one FIFA Club World Cup. 
+                In terms of overall trophies won, it is the fourth-most successful club in English football. </h4>
+            <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
+            <input type = "submit" value = "Get Affiliated Merch" />
+        </form>
     );
 };
 
@@ -259,6 +286,7 @@ const init = async () => {
     const data = await response.json();
 
     const changePasswordButton = document.getElementById('changePasswordButton');
+    const premiumButton = document.getElementById('premiumTestbutton');
 
     changePasswordButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -267,6 +295,14 @@ const init = async () => {
         return false;
     });
 
+    /*
+    premiumButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        ReactDOM.render(<PremiumWindow csrf={data.csrfToken} />,
+            document.getElementById('content'));
+        return false;
+    });
+    */
     ReactDOM.render(
         <ClubForm csrf = {data.csrfToken} />,
         document.getElementById('makeClub'),

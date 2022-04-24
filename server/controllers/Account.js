@@ -60,34 +60,34 @@ const signup = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-    const username = req.session.account.username;
-    const oldPass = `${req.body.oldPass}`;
-    const newPass = `${req.body.newPass}`;
-    const confirmPass = `${req.body.confirmPass}`;
+  const { username } = req.session.account;
+  const oldPass = `${req.body.oldPass}`;
+  const newPass = `${req.body.newPass}`;
+  const confirmPass = `${req.body.confirmPass}`;
 
-    if(!oldPass || !newPass || !confirmPass){
-        return res.status(400).json({error: 'All fields are required!'});
+  if (!oldPass || !newPass || !confirmPass) {
+    return res.status(400).json({ error: 'All fields are required!' });
+  }
+
+  if (newPass !== confirmPass) {
+    return res.status(400).json({ error: 'Passwords do not match!' });
+  }
+
+  return Account.authenticate(username, oldPass, async (err, account) => {
+    if (err || !account) {
+      return res.status(401).json({ error: 'Wrong username or password!' });
     }
 
-    if (newPass !== confirmPass){
-      return res.status(400).json({error: 'Passwords do not match!'});
+    try {
+      const hash = await Account.generateHash(newPass);
+      await Account.findOneAndUpdate({ _id: req.session.account._id }, { password: hash });
+      return res.json({ redirect: '/maker' });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occured' });
     }
-
-    return Account.authenticate(username, oldPass, async (err, account) => {
-      if (err || !account) {
-        return res.status(401).json({ error: 'Wrong username or password!' });
-      }
-
-      try {
-        const hash = await Account.generateHash(newPass);
-        await Account.findOneAndUpdate({_id: req.session.account._id}, {password: hash});
-        return res.json({redirect: '/maker'});
-      } catch (err) {
-        console.log(err);
-        return res.status(400).json({error: 'An error occured'});
-      }
-    });
-}
+  });
+};
 
 const getToken = (req, res) => res.json({ csrfToken: req.csrfToken() });
 

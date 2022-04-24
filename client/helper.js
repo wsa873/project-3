@@ -3,8 +3,8 @@
    end in an error.
 */
 const handleError = (message) => {
-    //document.getElementById('errorMessage').textContent = message;
-    //document.getElementById('domoMessage').classList.remove('hidden');
+    document.getElementById('errorMessage').textContent = message;
+    document.getElementById('functionMessage').classList.remove('hidden');
   };
   
   /* Sends post requests to the server using fetch. Will look for various
@@ -20,7 +20,7 @@ const handleError = (message) => {
     });
   
     const result = await response.json();
-    //document.getElementById('domoMessage').classList.add('hidden');
+    document.getElementById('functionMessage').classList.add('hidden');
 
     if(result.error) {
         handleError(result.error);
@@ -38,7 +38,7 @@ const handleError = (message) => {
   };
 
   const hideError = () => {
-    //document.getElementById('domoMessage').classList.add('hidden');
+    document.getElementById('functionMessage').classList.add('hidden');
   };
 
   module.exports = {
