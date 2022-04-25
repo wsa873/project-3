@@ -19,8 +19,8 @@ const handleClub = (e) => {
 
     helper.sendPost(e.target.action, {name, latitude, longitude, stadium, _csrf}, async() => {
         await loadMarkers();
-        //might need to clear markers
 
+        //clear markers so duplicates don't appear on top of one another
 
         addMarkersToMap();
     });
@@ -64,6 +64,12 @@ const ChangePasswordWindow = (props) => {
             <input id = "pass3" type = "password" name = "pass3" placeholder = "retype new password"/>
             <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
             <input className="formSubmit" type = "submit" value = "Change Password" />
+            
+            <input className = "formSubmit" type = "submit" value = "Close Window" 
+            onClick = {() =>{
+                const window = document.getElementById('content')
+                window.innerHTML = "";
+                }}/>
         </form>
     );
 }
@@ -78,13 +84,13 @@ const ClubForm = (props) => {
             className= "ClubForm"
         >
             <label htmlFor = "name">Name: </label>
-            <input id = "ClubName" type = "text" name = "name" placeholder= "AFC United"/>
+            <input id = "ClubName" type = "text" name = "name" placeholder= "Chelsea FC"/>
             <label htmlFor = "latitude">Latitude: </label>
-            <input id = "ClubLatitude" type = "number" name= "latitude" placeholder = "0"/>
+            <input id = "ClubLatitude" type = "number" step = "any" name= "latitude" placeholder = "-.1911"/>
             <label htmlFor = "longitude">Longitude: </label>
-            <input id = "ClubLongitude" type = "number" name= "longitude" placeholder = "0"/>
+            <input id = "ClubLongitude" type = "number" step = "any" name= "longitude" placeholder = "51.4816"/>
             <label htmlFor = "stadium">Stadium Name: </label>
-            <input id = "ClubStadium" type = "text" name = "name" placeholder= "John Polishini Center"/>
+            <input id = "ClubStadium" type = "text" name = "name" placeholder= "Old Trafford"/>
             <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
             <input className="makeClubSubmit" type = "submit" value = "Make Club" />
 
@@ -115,7 +121,12 @@ const PremiumWindow = (props) => {
                 and one FIFA Club World Cup. 
                 In terms of overall trophies won, it is the fourth-most successful club in English football. </h4>
             <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
-            <input type = "submit" value = "Get Affiliated Merch" />
+            <input className = "formSubmit" type = "submit" value = "Get Affiliated Merch" />
+            <input className = "formSubmit" type = "submit" value = "Close Window" 
+            onClick = {() =>{
+                const window = document.getElementById('content')
+                window.innerHTML = "";
+                }}/>
         </form>
     );
 };
@@ -133,6 +144,7 @@ const geojson = {
     features: [],
 };
 
+let mapboxMarkers = [];
 //needs to be in this scope to work. austin says that since we're not importing this anywhere
 //it's fine to leave it like this.
 let map;
@@ -209,6 +221,10 @@ const loadMarkers = async() =>{
 
     console.log(clubsData);
 
+    //removes duplicate markers
+    mapboxMarkers.forEach(m => m.remove());
+    mapboxMarkers.length = 0;
+
     const teamLocations = [
         {
             latitude:-.1911,
@@ -265,11 +281,11 @@ const loadMarkers = async() =>{
 
 const addMarker =(coordinates, title, description, className) =>{
 
-	new mapboxgl.Marker()
+	mapboxMarkers.push(new mapboxgl.Marker()
 		.setLngLat(coordinates)
 		.setPopup(new mapboxgl.Popup({ offset: 25}) //add popups
 		    .setHTML(`<h3>${title}</h3><p>${description}</p>`))
-		.addTo(map);
+		.addTo(map));
 
 }
 
@@ -286,7 +302,7 @@ const init = async () => {
     const data = await response.json();
 
     const changePasswordButton = document.getElementById('changePasswordButton');
-    const premiumButton = document.getElementById('premiumTestbutton');
+    const premiumButton = document.getElementById('premiumTestButton');
 
     changePasswordButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -295,14 +311,14 @@ const init = async () => {
         return false;
     });
 
-    /*
+    
     premiumButton.addEventListener('click', (e) => {
         e.preventDefault();
         ReactDOM.render(<PremiumWindow csrf={data.csrfToken} />,
             document.getElementById('content'));
         return false;
     });
-    */
+    
     ReactDOM.render(
         <ClubForm csrf = {data.csrfToken} />,
         document.getElementById('makeClub'),

@@ -60,11 +60,10 @@ nav:nth-child(1) {
     border-top-right-radius: 4px;
 }
 
-.ClubForm label, .ClubForm input, h1, h4{
+.ClubForm label, .ClubForm input, h3, p{
     display: block;
     width: 200px;
     margin: 20px;
-    color: white;
 }
 
 .ClubForm label {
@@ -190,7 +189,7 @@ nav:nth-child(1) {
 #errorMessage {
     font-size: 1.2em;
     font-weight: bold;
-    color: red;
+    color: yellow;
     font-style: italic;
 }
 
@@ -269,10 +268,10 @@ h3.ClubName {
 }
 
 #map {
-    left: 600px;
-    bottom: 450px;
-	height: 1000px;
-    width: 1400px;
+    left: 500px;
+    bottom: 650px;
+	height: 800px;
+    width: 1200px;
 }
 
 .mapboxgl-marker {
@@ -295,8 +294,8 @@ h3.ClubName {
 
 #content {
     position: fixed;
-    top: 0px;
-    right: 100px;
+    top: 100px;
+    left: 30%;
     width: 300px;
     margin-top:0px;
     padding-top:10px;
@@ -304,6 +303,26 @@ h3.ClubName {
     border-top-right-radius: 4px;
 }
 
+#changePasswordForm, #premiumWindow {
+    padding: 20px;
+    background-color: white;
+    border-color: 2px solid black;
+    width: 500px;
+    height: 200px;
+    border-radius: 4px;
+}
+
+#changePasswordForm label, #changePasswordForm .formSubmit {
+    float: left;
+    display: inline;
+    width: 49%;
+    margin-top: 10px;
+}
+
+#changePasswordform input {
+    margin-top: 10px;
+}
+/*
 #changePasswordForm label {
     font-size: 1.2em;
     width: 300px;
@@ -311,10 +330,12 @@ h3.ClubName {
     margin-top: 20px;
     color: black;
 }
+*/
 
-
-#changePasswordForm .formSubmit {
+#changePasswordForm .formSubmit, #premiumWindow .formSubmit{
     width: 200px;
-    float: left;
 }
 
+#premiumWindow {
+    height: 400px;
+}

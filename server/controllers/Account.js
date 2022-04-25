@@ -82,8 +82,8 @@ const changePassword = async (req, res) => {
       const hash = await Account.generateHash(newPass);
       await Account.findOneAndUpdate({ _id: req.session.account._id }, { password: hash });
       return res.json({ redirect: '/maker' });
-    } catch (err) {
-      console.log(err);
+    } catch (err2) {
+      console.log(err2);
       return res.status(400).json({ error: 'An error occured' });
     }
   });

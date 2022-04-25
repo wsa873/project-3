@@ -46,13 +46,15 @@ const getClubs = (req, res) => ClubModel.findByOwner(req.session.account._id, (e
   return res.json({ Clubs: docs });
 });
 
-//here I would place links to any shops or more information about the club the user searched up.
-//unused due to time constraints, but here to ensure functionality for the premium test
+// here I would place links to any shops or more information about the club the user searched up.
+// unused due to time constraints, but here to ensure functionality for the premium test
+/*
 const getAffiliatedLinks = async (req, res) => {
 
-}
+};
+*/
 
-//unused
+// unused
 const editClub = async (req, res) => {
   if (!req.body.name || !req.body.latitude || !req.body.longitude || !req.body.stadium) {
     return res.status(400).json({ error: 'All fields are required!' });
@@ -86,5 +88,5 @@ module.exports = {
   makeClub,
   getClubs,
   editClub,
-  getAffiliatedLinks,
+  //getAffiliatedLinks,
 };
