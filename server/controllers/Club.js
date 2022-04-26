@@ -88,5 +88,5 @@ module.exports = {
   makeClub,
   getClubs,
   editClub,
-  //getAffiliatedLinks,
+  // getAffiliatedLinks,
 };

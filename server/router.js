@@ -13,7 +13,8 @@ const router = (app) => {
   app.get('/logout', mid.requiresSecure, mid.requiresLogin, controllers.Account.logout);
 
   app.post('/changePassword', mid.requiresSecure, mid.requiresLogin, controllers.Account.changePassword);
-  //app.post('/premium', mid.requiresSecure, mid.requiresLogin, controllers.Club.getAffiliatedLinks);
+  // app.post('/premium', mid.requiresSecure,
+  // mid.requiresLogin, controllers.Club.getAffiliatedLinks);
 
   app.get('/maker', mid.requiresLogin, controllers.Club.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Club.makeClub);
@@ -21,6 +22,11 @@ const router = (app) => {
   app.post('/maker', mid.requiresLogin, controllers.Club.editClub);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+
+  // redirects users to correct urls
+  app.all('*', (req, res) => {
+    res.redirect('/');
+  });
 };
 
 module.exports = router;

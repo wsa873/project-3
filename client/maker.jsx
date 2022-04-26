@@ -19,9 +19,6 @@ const handleClub = (e) => {
 
     helper.sendPost(e.target.action, {name, latitude, longitude, stadium, _csrf}, async() => {
         await loadMarkers();
-
-        //clear markers so duplicates don't appear on top of one another
-
         addMarkersToMap();
     });
 
@@ -90,7 +87,7 @@ const ClubForm = (props) => {
             <label htmlFor = "longitude">Longitude: </label>
             <input id = "ClubLongitude" type = "number" step = "any" name= "longitude" placeholder = "51.4816"/>
             <label htmlFor = "stadium">Stadium Name: </label>
-            <input id = "ClubStadium" type = "text" name = "name" placeholder= "Old Trafford"/>
+            <input id = "ClubStadium" type = "text" name = "name" placeholder= "Stamford Bridge"/>
             <input id = "_csrf" type = "hidden" name = "_csrf" value = {props.csrf} />
             <input className="makeClubSubmit" type = "submit" value = "Make Club" />
 
@@ -155,9 +152,6 @@ let map;
 //as intended and will be refactored, moved elsewhere,
 //or removed once that is done
 const initMap = () => {
-
-//will most likely be moved to config var in final version
-mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwbWZicnVoIn0.wxTIYZj7IkkXy-BwDUmuBw';
 
     map = new mapboxgl.Map({
         container: 'map',
