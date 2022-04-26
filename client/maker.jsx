@@ -152,9 +152,8 @@ let map;
 //as intended and will be refactored, moved elsewhere,
 //or removed once that is done
 const initMap = () => {
-
-    //this token has been configured to only work with the heroku url
-    mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJjbDJnZnIzdzgwMDJwM2ZsajFkMzFmOHViIn0.zujn4gmbmexjl9bI5OYn6w';
+    
+    mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJja2hmOGI1YjIwanpjMnBveHdwbWZicnVoIn0.wxTIYZj7IkkXy-BwDUmuBw';
 
     map = new mapboxgl.Map({
         container: 'map',
