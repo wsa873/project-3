@@ -153,6 +153,9 @@ let map;
 //or removed once that is done
 const initMap = () => {
 
+    //this token has been configured to only work with the heroku url
+    mapboxgl.accessToken = 'pk.eyJ1Ijoid3NhODczNyIsImEiOiJjbDJnZnIzdzgwMDJwM2ZsajFkMzFmOHViIn0.zujn4gmbmexjl9bI5OYn6w';
+
     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v10',
